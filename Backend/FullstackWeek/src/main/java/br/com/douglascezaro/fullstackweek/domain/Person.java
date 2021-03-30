@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Person {
@@ -11,18 +13,32 @@ public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long code;
-	
+
 	private String name;
-	
+
 	private String cpf;
-	
+
 	private String phone;
-	
+
 	private String email;
-	
+
 	private Integer age;
-	
+
 	private String birthDate;
+
+	private Boolean isVaccinated;
+	
+	@ManyToOne
+	@JoinColumn(name="code_priority_groups")
+	private PriorityGroups group;
+
+	public PriorityGroups getGroup() {
+		return group;
+	}
+
+	public void setGroup(PriorityGroups group) {
+		this.group = group;
+	}
 
 	public Long getCode() {
 		return code;
@@ -78,6 +94,14 @@ public class Person {
 
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public Boolean getIsVaccinated() {
+		return isVaccinated;
+	}
+
+	public void setIsVaccinated(Boolean isVaccinated) {
+		this.isVaccinated = isVaccinated;
 	}
 
 	@Override
@@ -140,7 +164,5 @@ public class Person {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

@@ -3,7 +3,6 @@ package br.com.douglascezaro.fullstackweek.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +28,8 @@ public class PersonController {
 	
 	@PostMapping
 	public Person createPerson(@RequestBody Person person) {
+		Person personCad = personRepository.save(person);
+		personCad.setIsVaccinated(false);
 		return personRepository.save(person);
 	}
 	
@@ -42,6 +43,7 @@ public class PersonController {
 					record.setPhone(person.getPhone());
 					record.setEmail(person.getEmail());
 					record.setAge(person.getAge());
+					record.setIsVaccinated(person.getIsVaccinated());
 					
 					return personRepository.save(record);
 				}
